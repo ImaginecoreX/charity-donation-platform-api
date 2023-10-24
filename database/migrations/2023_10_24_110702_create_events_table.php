@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('location_link');
             $table->foreignId('district_id')->references('id')->on('districts') ;
             $table->foreignId('status_id')->references('id')->on('statuses') ;
+            $table->foreignId('event_statuses_id')->references('id')->on('event_statuses');
             $table->foreign('admin_email')->references('email')->on('admins');
             $table->timestamps();
         });
