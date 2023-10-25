@@ -54,7 +54,7 @@ class eventController extends Controller
 
     //all events search
     public function allEvent(){
-        $allEvent = DB::table('events')->join('event_statuses','events.status_id','=','event_status.id')->join('district','events.district_id','=','district.id')->get();
+        $allEvent = DB::table('events')->join('event_statuses','events.event_statuses_id','=','event_statuses.id')->join('districts','events.district_id','=','districts.id')->get();
         return response()->json(['allEvent'=>$allEvent],200);
     }
 
