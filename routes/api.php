@@ -60,10 +60,10 @@ Route::post('/add-event',[eventController::class, 'addEvent']);
 //http://localhost:8000/api/update-event/{id}
 Route::put('/update-event/{id}',[eventController::class,'updateEvent']);
 
-//http://localhost:8000/api/update-user
+//http://localhost:8000/api/get-all-event
 Route::get('/get-all-event',[eventController::class,'allEvent']);
 
-//http://localhost:8000/api/all-user/{id}
+//http://localhost:8000/api//get-event/{id}
 Route::get('/get-event/{id}',[eventController::class,'eventSearch']);
 
 ///////////////////////////////////Request///////////////////////////////////////

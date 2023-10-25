@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\events;
+use App\Models\event;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -19,6 +19,8 @@ class eventController extends Controller
             'time'=>'required',
             'location_link'=>'required',
             'district_id'=>'required',
+            'status_id'=>'required',
+            'event_statuses_id'=>'required',
         ]); 
 
         if($validator->fails()){
@@ -26,7 +28,7 @@ class eventController extends Controller
         }
 
       
-            $eventData = events::create([
+            $eventData = event::create([
                 'id'=>$request->input('id'),
                 'admin_email'=>$request->input('admin_email'),
                 'title'=>$request->input('title'),
@@ -34,6 +36,8 @@ class eventController extends Controller
                 'time'=>$request->input('time'),
                 'location_link'=>$request->input('location_link'),
                 'district_id'=>$request->input('district_id'),
+                'status_id'=>$request->input('status_id'),
+                'event_statuses_id'=>$request->input('status_id'),
                 
             ]);
         return response()->json(['newEvent'=>$eventData],200);
@@ -41,7 +45,7 @@ class eventController extends Controller
 
     //update event
     public function updateEvent(request $request, $id){
-        $event = events::where('id',$id)->first();
+        $event = event::where('id',$id)->first();
         $event->update($request->all());
 
         return response()->json(['message'=>'Sucess'],200);
@@ -50,13 +54,13 @@ class eventController extends Controller
 
     //all events search
     public function allEvent(){
-        $allEvent = DB::table('events')->join('event_statuses','events.status_id','=','event_status.id')->join('district','events.district_id','=','district.id')->get();
+        $allEvent = DB::table('events')->join('event_statuses','events.event_statuses_id','=','event_statuses.id')->join('districts','events.district_id','=','districts.id')->get();
         return response()->json(['allEvent'=>$allEvent],200);
     }
 
     //individual event search
     public function eventSearch(request $request,$id){
-        $searchEvent = events::where('id',$id)->get();
+        $searchEvent = event::where('id',$id)->get();
         return response()->json(['searchEvent'=>$searchEvent],200);
     }
 }
