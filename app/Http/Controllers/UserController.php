@@ -12,7 +12,7 @@ class UserController extends Controller
     //register user
     public function registerUser(Request $request)
     {
-        $validetor = Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'email' => 'required',
             'fname' => 'required',
             'lname' => 'required',
@@ -22,19 +22,22 @@ class UserController extends Controller
             'gender_id' => 'required',
         ]);
 
-        if ($validetor->fails()) {
-            return response()->json(['err' => $validetor->errors()], 422);
+       
+
+        if ($validator->fails()) {
+            return response()->json(['err' => $validator->errors()], 422);
         }
 
 
-        $Validate = new ValidatorManage($request->input("email"), $request->input("mobile"),$request->input("password"));
+        $Validate = new ValidatorManage($request->input("email"),$request->input("mobile"),$request->input("password"));
 
         $findValidateStatus = $Validate->validate();
 
-        if($findValidateStatus!=="success") {
-           return $findValidateStatus;
+        if($findValidateStatus !== "sucess"){
+
+          return  $findValidateStatus;
+          
         }else{
-    
 
             $findUser = user::where('email', $request->input('email'))->exists();
 
@@ -53,10 +56,9 @@ class UserController extends Controller
             ]);
     
             return response()->json(['new' => $user], 200);
-
         }
 
-       
+
     }
     //login user
     public function loginUser(Request $request)
