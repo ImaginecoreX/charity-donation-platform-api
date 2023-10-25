@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\ValidatorManage;
 use App\Models\user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -25,23 +26,37 @@ class UserController extends Controller
             return response()->json(['err' => $validetor->errors()], 422);
         }
 
-        $findUser = user::where('email', $request->input('email'))->exists();
 
-        if ($findUser) {
-            return response()->json(['err' => 'user alredy registered'], 422);
+        $Validate = new ValidatorManage($request->input("email"), $request->input("mobile"),$request->input("password"));
+
+        $findValidateStatus = $Validate->validate();
+
+        if($findValidateStatus!=="success") {
+           return $findValidateStatus;
+        }else{
+    
+
+            $findUser = user::where('email', $request->input('email'))->exists();
+
+            if ($findUser) {
+                return response()->json(['err' => 'user alredy registered'], 422);
+            }
+    
+            $user = user::create([
+                'email' => $request->input('email'),
+                'fname' => $request->input('fname'),
+                'lname' => $request->input('lname'),
+                'mobile' => $request->input('mobile'),
+                'password' => $request->input('password'),
+                'status_id' => $request->input('status_id'),
+                'gender_id' => $request->input('gender_id'),
+            ]);
+    
+            return response()->json(['new' => $user], 200);
+
         }
 
-        $user = user::create([
-            'email' => $request->input('email'),
-            'fname' => $request->input('fname'),
-            'lname' => $request->input('lname'),
-            'mobile' => $request->input('mobile'),
-            'password' => $request->input('password'),
-            'status_id' => $request->input('status_id'),
-            'gender_id' => $request->input('gender_id'),
-        ]);
-
-        return response()->json(['new' => $user], 200);
+       
     }
     //login user
     public function loginUser(Request $request)
@@ -51,6 +66,8 @@ class UserController extends Controller
         if (!$findLoginUserData) {
             return response()->json(['err' => 'login faild'], 422);
         }
+
+
 
         $user_data = user::where('email', $request->input('email'))->get();
 
