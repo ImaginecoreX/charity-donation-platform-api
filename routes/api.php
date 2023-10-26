@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\adminController;
+use App\Http\Controllers\contactController;
 use App\Http\Controllers\donationController;
 use App\Http\Controllers\eventController;
 use App\Http\Controllers\requestController;
@@ -69,7 +70,7 @@ Route::get('/get-event/{id}',[eventController::class,'eventSearch']);
 ///////////////////////////////////Request///////////////////////////////////////
 
 
-//http://localhost:8000/api/add-event
+//http://localhost:8000/api/send-request
 Route::post('/send-request',[requestController::class, 'sendRequest']);
 
 //http://localhost:8000/api/update-event/{id}/{current_status_id}
@@ -101,3 +102,9 @@ Route::post('/add-code',[adminController::class, 'addCode']);
 
 //http://localhost:8000/api/admin-login
 Route::post('/admin-login',[adminController::class, 'admin-login']);
+
+
+///////////////////////////////////contact///////////////////////////////////////
+
+//http://localhost:8000/api/submit-form
+Route::post('/submit-form', [contactController::class, 'addForm']);
