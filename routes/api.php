@@ -101,3 +101,13 @@ Route::post('/add-code',[adminController::class, 'addCode']);
 
 //http://localhost:8000/api/admin-login
 Route::post('/admin-login',[adminController::class, 'admin-login']);
+
+//http://localhost:8000/api/all-admin
+Route::get('/all-admin',[adminController::class,'allAdmin']);
+
+//http://localhost:8000/api/update-admin/{email}
+Route::put('/update-admin/{email}',[adminController::class,'updateAdmin']);
+
+
+//http://localhost:8000/api/block-admin/{email}/{status}
+Route::get('/block-admin/{email}/{status}',[adminController::class,'adminBlock']);
