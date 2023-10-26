@@ -16,7 +16,8 @@ return new class extends Migration
             $table->string('admin_email');
             $table->string('title',100);
             $table->longText('description');
-            $table->dateTime('time');
+            $table->dateTime('from');
+            $table->dateTime('to');
             $table->string('location_link');
             $table->foreignId('district_id')->references('id')->on('districts') ;
             $table->foreignId('status_id')->references('id')->on('statuses') ;

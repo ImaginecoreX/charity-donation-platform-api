@@ -13,49 +13,24 @@ class donationController extends Controller
     public function donate(Request $request)
     {
 
-        // $validetor = Validator::make($request->all(), [
-        //     'donation_id' => 'required',
-        //     'user_email' => 'required',
-        //     'requst_id' => 'required',
-        //     'amount' => 'required',
-        // ]);
+        $validetor = Validator::make($request->all(), [
+            'donation_id' => 'required',
+            'user_email' => 'required',
+            'requst_id' => 'required',
+            'amount' => 'required',
+        ]);
 
-        // if ($validetor->fails()) {
-        //     return response()->json(['err' => $validetor->errors()], 422);
-        // }
-
-
-        $merchant_id         = $request->input('merchant_id');
-        $order_id            = uniqid();
-        $payhere_amount      = $request->input('payhere_amount');
-        $payhere_currency    = $request->input('payhere_currency');
-        $status_code         = $request->input('status_code');
-        $md5sig              = $request->input('md5sig');
-
-        $merchant_secret = "NDkzODExMTA5Mzc3ODIwMjQyOTEyNDI2ODQwNjY5MDE0MjEyMzA="; // Replace with your Merchant Secret
-
-        $local_md5sig = strtoupper(
-            md5(
-                $merchant_id .
-                    $order_id .
-                    $payhere_amount .
-                    $payhere_currency .
-                    $status_code .
-                    strtoupper(md5($merchant_secret))
-            )
-        );
-
-        if (($local_md5sig === $md5sig) and ($status_code == 2)) {
-            //TODO: Update your database as payment success
+        if ($validetor->fails()) {
+            return response()->json(['err' => $validetor->errors()], 422);
         }
 
 
-        // $donetion = donation::create([
-        //     'donation_id' => $request->input('donation_id'),
-        //     'user_email' => $request->input('user_email'),
-        //     'requst_id' => $request->input('requst_id'),
-        //     'amount' => $request->input('amount'),
-        // ]);
+        $donetion = donation::create([
+            'donation_id' => $request->input('donation_id'),
+            'user_email' => $request->input('user_email'),
+            'requst_id' => $request->input('requst_id'),
+            'amount' => $request->input('amount'),
+        ]);
 
         return response()->json(['sucesss'], 200);
     }
