@@ -108,3 +108,6 @@ Route::post('/admin-login',[adminController::class, 'admin-login']);
 
 //http://localhost:8000/api/submit-form
 Route::post('/submit-form', [contactController::class, 'addForm']);
+
+//http://localhost:8000/api/all-forms
+Route::get('/all-forms', [contactController::class, 'allForms']);
