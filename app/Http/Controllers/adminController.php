@@ -88,7 +88,7 @@ class adminController extends Controller
             $findAdmin->type_id = 3;
             $findAdmin->save();
             return response()->json(['msg'=>'block'], 200);
-        }else{
+        }else if($status == "3"){
             $findAdmin->type_id = 2;
             $findAdmin->save();
             return response()->json(['msg'=>'unblock'], 200);
