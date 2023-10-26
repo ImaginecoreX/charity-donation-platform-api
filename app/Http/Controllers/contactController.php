@@ -59,8 +59,12 @@ class contactController extends Controller
             return response()->json(['newForm'=>$contactData],200);
 
         }
+    }
 
-       
+    public function allForms(){
+
+        $allForms = contact::all();
+        return response()->json(['allForms'=>$allForms],200);
 
     }
 
