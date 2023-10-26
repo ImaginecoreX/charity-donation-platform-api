@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Middleware\GenerateUniqueID;
 use App\Http\Middleware\FormValidator;
 use App\Models\contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Validator;
 
 class contactController extends Controller
@@ -13,7 +15,6 @@ class contactController extends Controller
     public function addForm(Request $request){
 
         $validator = Validator::make($request->all(),[
-            'id'=>'required',
             'name'=>'required',
             'email'=>'required',
             'msg'=>'required',
@@ -33,8 +34,24 @@ class contactController extends Controller
 
         }else{
 
+            $lastForm = DB::table('contacts')->latest('id')->first();
+
+            if($lastForm){
+                $lastID = $lastForm->id;
+
+            }else{
+                $lastID = 'DNS-0000';
+
+            }
+
+            $pattern = 'DNS';
+
+            $uniqueIdGenerator = new GenerateUniqueID($pattern, $lastID);
+            $newUniqueId = $uniqueIdGenerator->generate();
+
+
             $contactData = contact::create([
-                'id'=>$request->input('id'),
+                'id'=>$newUniqueId,
                 'name'=>$request->input('name'),
                 'email'=>$request->input('email'),
                 'msg'=>$request->input('msg'),
