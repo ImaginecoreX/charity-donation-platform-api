@@ -6,6 +6,7 @@ use App\Http\Middleware\ValidatorManage;
 use App\Models\user;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use stdClass;
 
 class UserController extends Controller
 {
@@ -69,9 +70,16 @@ class UserController extends Controller
             return response()->json(['err' => 'login faild'], 422);
         }
 
-        $user_data = user::where('email', $request->input('email'))->get();
+        $user_data = user::where('email', $request->input('email'))->first();
 
-        return response()->json(['user' => $user_data], 200);
+        $obj = new stdClass();
+
+        $obj->email = $user_data->email;
+        $obj->fname = $user_data->fname;
+        $obj->lname = $user_data->lname;
+        $obj->password= $user_data->password;
+
+        return response()->json( $obj, 200);
     }
 
     //update user
