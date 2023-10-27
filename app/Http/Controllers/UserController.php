@@ -70,7 +70,11 @@ class UserController extends Controller
             return response()->json(['err' => 'login faild'], 422);
         }
 
+
         $user_data = user::where('email', $request->input('email'))->first();
+
+
+
 
         $obj = new stdClass();
 
