@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('fname');
             $table->string('lname');
             $table->foreignId('type_id')->references('id')->on('admin_types');
-            $table->string('verification_code');
+            $table->string('password');
             $table->timestamps();
         });
     }
