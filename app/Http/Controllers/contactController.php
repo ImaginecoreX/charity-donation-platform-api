@@ -7,7 +7,7 @@ use App\Http\Middleware\FormValidator;
 use App\Models\contact;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Validator;
+use Illuminate\Support\Facades\Validator;
 
 class contactController extends Controller
 {

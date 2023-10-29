@@ -20,11 +20,13 @@ return new class extends Migration
             $table->string('file_path');
             $table->unsignedBigInteger('d_type_id');
             $table->unsignedBigInteger('r_type_id');
+            $table->unsignedBigInteger('status_id');
             $table->dateTime('deadline');
             $table->timestamps();
 
             $table->foreign('d_type_id')->references('donation_type_id')->on('donation_types');
             $table->foreign('r_type_id')->references('requst_type_id')->on('requst_types');
+            $table->foreign('status_id')->references('id')->on('statuses');
         });
     }
 
