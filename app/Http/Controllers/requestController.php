@@ -20,6 +20,7 @@ class requestController extends Controller
             'd_type_id' => 'required',
             'r_type_id' => 'required',
             'deadline' => 'required',
+            
         ]);
 
         if ($validetor->fails()) {
@@ -34,6 +35,7 @@ class requestController extends Controller
             'd_type_id' =>  $request->input('d_type_id'),
             'r_type_id' =>  $request->input('r_type_id'),
             'deadline' =>  $request->input('deadline'),
+            
         ]);
 
         return response()->json(['request'=>$requestData],200);
